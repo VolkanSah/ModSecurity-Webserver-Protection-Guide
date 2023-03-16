@@ -1,4 +1,4 @@
-# ModSecurity Webserver Protection Guide 03/2023
+# ModSecurity Webserver Protection Guide (Update 03/2023)
 Welcome to the ModSecurity-Webserver-Protection repository! This repository provides a step-by-step guide on how to use ModSecurity with Apache2 or Nginx web servers to enhance server security. ModSecurity is a popular open-source Web Application Firewall (WAF) that provides protection against various attacks on web applications.
 
 In this guide, I will explore how to use ModSecurity to protect your web server against SQL injection attacks, cross-site scripting (XSS) attacks, and other common web application attacks. I will also cover how to integrate additional security tools like ClamAV, Chkrootkit, Rkhunter, and Fail2ban to further enhance the security of your web server.
