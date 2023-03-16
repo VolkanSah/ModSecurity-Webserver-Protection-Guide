@@ -465,6 +465,18 @@ This rule checks for the presence of the RKHunter command in the request argumen
 
 With these steps, you have configured ModSecurity to work with RKHunter on both Apache and Nginx. When a warning is detected by RKHunter, ModSecurity will block the request and log a critical severity message. Additionally, you can configure ModSecurity to work with a Fail2ban filter that reads the RKHunter log file and triggers a ban if specific warning strings are detected.
 
+## Be carefuly
+
+There are many community-driven projects and resources available online that provide advanced and secure ModSecurity rule files that you can use as a starting point. Here are a few examples:
+
+- OWASP ModSecurity Core Rule Set (CRS): This is a set of rules that are designed to provide basic security protections for web applications. The CRS is continuously updated and maintained by the OWASP ModSecurity Core Rule Set Project, and is available on GitHub.
+
+- Comodo ModSecurity Rules: Comodo is a security company that provides a set of ModSecurity rules that are designed to provide advanced security protections for web applications. These rules are available for free on their website.
+
+- Atomicorp ModSecurity Rules: Atomicorp is a security company that provides a set of ModSecurity rules that are designed to provide advanced security protections for web applications. These rules are available for free on their website.
+
+When using any ModSecurity rule file, it is important to understand the rules and customize them to fit your specific use case. 
+
 
 
 
