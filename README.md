@@ -51,5 +51,80 @@ git submodule update
 make
 sudo make install
 ```
+- Download and build the ModSecurity Apache Connector:
+```bash
+cd ..
+git clone --depth 1 https://github.com/SpiderLabs/ModSecurity-apache.git
+cd ModSecurity-apache
+./autogen.sh
+./configure --with-libmodsecurity=/usr/local/modsecurity
+make
+sudo make install
+```
+## Configure Apache to use ModSecurity:
+Create a new configuration file for ModSecurity:
+```bash
+sudo nano /etc/apache2/mods-available/modsecurity.conf
+```
+```bash
+Add the following content to the file:
+LoadModule security2_module /usr/lib/apache2/modules/mod_security2.so
+<IfModule mod_security2.c>
+  SecRuleEngine On
+  SecRequestBodyAccess On
+  SecResponseBodyAccess On
+  SecDataDir /var/cache/modsecurity
+  IncludeOptional /etc/apache2/modsecurity.d/*.conf
+</IfModule>
+```
+Create a directory for additional ModSecurity rules:
+```bash
+sudo mkdir /etc/apache2/modsecurity.d
+```
+## Enable ModSecurity in Apache:
+Ubuntu/Debian:
+```bash
+sudo a2enmod modsecurity
+sudo service apache2 restart
 
+Fedora:
+```bash
+sudo ln -s /etc/apache2/mods-available/modsecurity.conf /etc/httpd/conf.modules.d/10-modsecurity.conf
+sudo systemctl restart httpd
+```
+BSD:
+```bash
+echo 'LoadModule security2_module /usr/local/libexec/apache24/mod_security2.so' | sudo tee -a /usr/local/etc/apache24/httpd.conf
+sudo service apache24 restart
+```
+Arch Linux:
+```bash
+echo 'LoadModule security2_module /usr/lib/httpd/modules/mod_security2.so' | sudo tee -a /etc/httpd/conf/httpd.conf
+sudo systemctl restart httpd
+```
+
+Configure and download the Core Rule Set (CRS):
+
+    Install the Core Rule Set:
+```bash
+cd /etc/apache2
+sudo git clone https://github.com/coreruleset/coreruleset.git modsecurity-crs
+```
+Create a symbolic link to the CRS configuration file:
+```bash
+
+    sudo ln -s /etc/apache2/modsecurity-crs/crs-setup.conf /etc/apache2/modsecurity.d/crs-setup.conf
+    sudo ln -s /etc/apache2/modsecurity-crs/rules/ /etc/apache2/modsecurity.d/rules
+```
+### Test the Apache configuration:
+
+    Run the following command to test if the configuration is correct:
+```bash
+sudo apachectl configtest
+```
+If the output shows "Syntax OK," you can proceed to restart the Apache server:
+```bash
+sudo systemctl restart apache2
+```
+Now, ModSecurity should be installed and enabled on your Apache web server. To add custom rules or modify existing ones, you can edit the configuration files located in the /etc/apache2/modsecurity.d/ directory.
 
