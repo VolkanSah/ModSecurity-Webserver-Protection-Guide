@@ -477,7 +477,7 @@ There are many community-driven projects and resources available online that pro
 
 When using any ModSecurity rule file, it is important to understand the rules and customize them to fit your specific use case. 
 
-
+Copyright Volkan (Sah) Kücükbudak
 
 
 
