@@ -396,6 +396,41 @@ sudo systemctl restart fail2ban
 ```
 With these steps, you have configured Fail2ban to work with ModSecurity on both Apache and Nginx. When a request is blocked by ModSecurity, Fail2ban will read the audit log and ban the IP address that made the request.
 
+# Chkrootkit with Mod_Security
+Chkrootkit is a tool for checking if a system has been compromised by rootkits. While it is not directly related to ModSecurity, you can use it alongside ModSecurity to enhance the security of your web server.
+
+Here are the general steps you can follow to use Chkrootkit with ModSecurity on both Apache and Nginx:
+
+-> Install Chkrootkit on your system. The installation process will vary depending on your operating system. You can refer to the official Chkrootkit documentation for installation instructions on your specific OS.
+
+-> Create a new ModSecurity rule to check for Chkrootkit warnings. You can create a new rule that checks for the presence of specific strings in the output of the Chkrootkit command. Here is an example rule:
+```bash
+SecRule ARGS "@rx /usr/bin/chkrootkit" \
+  "id:12346,\
+  phase:2,\
+  t:none,\
+  pass,\
+  chain"
+SecRule RESPONSE_BODY "@rx Warning: Possible \(hacker|trojan|worm\) rootkit activity detected" \
+  "id:12347,\
+  phase:4,\
+  t:none,\
+  block,\
+  msg:'Possible rootkit activity detected',\
+  severity:'CRITICAL'"
+```
+This rule checks for the presence of the Chkrootkit command in the request arguments, and then checks for the presence of specific warning strings in the response body. If a warning is detected, the rule blocks the request and generates a critical severity message.
+
+-> Configure ModSecurity to use the new rule. You can add the new rule to the ModSecurity configuration file, and then reload the configuration to apply the changes.
+
+-> Run Chkrootkit regularly to scan for rootkits on your system. You can set up a cron job to run Chkrootkit on a regular basis and send the output to a log file.
+-> Configure ModSecurity to read the Chkrootkit log file. You can create a new Fail2ban filter that parses the Chkrootkit log file and triggers a ban if specific warning strings are detected.
+
+-> Restart your web server to apply the ModSecurity configuration changes.
+
+With these steps, you have configured ModSecurity to work with Chkrootkit on both Apache and Nginx. When a warning is detected by Chkrootkit, ModSecurity will block the request and log a critical severity message. Additionally, you can configure ModSecurity to work with a Fail2ban filter that reads the Chkrootkit log file and triggers a ban if specific warning strings are detected.
+
+
 
 
 
