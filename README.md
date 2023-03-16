@@ -228,5 +228,115 @@ If the output shows "configuration file test is successful," you can proceed to 
 ```
 Now, ModSecurity should be installed and enabled on your Nginx web server. To add custom rules or modify existing ones, you can edit the configuration files located in the /etc/nginx/modsecurity.d/ directory.
 
+# Configuration for using ClamAV with Apache2:
+These rules scan submitted files for malware by using the "clamscan" command from ClamAV. If a virus is found, the file is blocked and a warning message is issued.
+
+The rules in lines 10-13 scan the uploaded file using ClamAV and block the file if a virus is found. The rules in lines 14-19 allow the upload of files that do not need to be scanned, such as PDF, DOC, and XLS files. The rule in line 20 allows the upload of files that have the "multipart/form-data" content type, which is commonly used for file upload forms.
+
+To configure ModSecurity to use ClamAV as the anti-virus engine, follow these steps:
+```bash
+
+SecRule FILES_TMPNAMES "@inspectFile /usr/bin/clamscan" \
+    "id:12345,\
+    phase:2,\
+    t:none,\
+    block,\
+    msg:'Virus found in file',\
+    severity:'CRITICAL',\
+    chain"
+
+SecRule FILES_TMPNAMES "!@clamav_scan" \
+    "id:12346,\
+    phase:2,\
+    t:none,\
+    pass,\
+    chain"
+
+SecRule FILES_TMPNAMES "!@rx \.pdf$" \
+    "id:12347,\
+    phase:2,\
+    t:none,\
+    pass,\
+    chain"
+
+SecRule FILES_TMPNAMES "!@rx \.doc$" \
+    "id:12348,\
+    phase:2,\
+    t:none,\
+    pass,\
+    chain"
+
+SecRule FILES_TMPNAMES "!@rx \.xls$" \
+    "id:12349,\
+    phase:2,\
+    t:none,\
+    pass"
+
+SecRule REQUEST_HEADERS:Content-Type "!@rx ^multipart/form-data" \
+    "id:12350,\
+    phase:1,\
+    t:none,\
+    pass"
+```
+The comments in the code explain what each rule does. You can customize these rules based on your specific needs.
+Save the file and restart Apache:
+```bash
+sudo systemctl restart apache2
+```
+With these steps, you have configured ModSecurity to use ClamAV as the anti-virus engine. You can now upload files to your server and ensure that they are automatically checked for malware. If you want every file uploaded to your server to be automatically checked for malware, you can make the following changes to the rules in the ModSecurity configuration file:
+
+
+Change the rule in line 14 from:
+```bash
+SecRule FILES_TMPNAMES "!@clamav_scan" \
+```
+to:
+```bash
+SecRule FILES_TMPNAMES "!@inspectFile /usr/bin/clamscan" \
+```
+This will cause every uploaded file to be scanned with ClamAV, regardless of its file type. Remove the rules in lines 15-19 that allow the upload of specific file types. This will ensure that all uploaded files are scanned.
+
+Save the file and restart Apache:
+```bash
+sudo systemctl restart apache2
+```
+With these changes, ModSecurity will be configured to scan every uploaded file with ClamAV, regardless of its file type. This will ensure that all files are checked for malware before being stored on your server.
+
+# Configuration for using ClamAV with Nginx:
+    Configure ModSecurity to use ClamAV. Here is an example configuration that you can use:
+```bash
+SecRule REQUEST_BODY \
+  "@clamav_scan" \
+  "id:12345,\
+  phase:2,\
+  t:none,\
+  block,\
+  msg:'Virus found in file',\
+  severity:'CRITICAL'"
+```
+This rule scans the request body with ClamAV and blocks the request if a virus is found. You can customize this rule based on your specific needs.
+
+    Configure Nginx to use ModSecurity. Here is an example configuration that you can use:
+
+```bash
+http {
+  ...
+  modsecurity on;
+  modsecurity_rules_file /path/to/modsecurity.conf;
+  ...
+}
+```
+This configuration enables ModSecurity and specifies the location of the ModSecurity configuration file. You can customize the file path based on where you saved the configuration file.
+
+    Save the configuration file and restart Nginx:
+```bash
+sudo systemctl restart nginx
+```
+With these steps, you have configured ModSecurity to use ClamAV to scan files for malware in Nginx. You can now upload files to your server and ensure that they are automatically checked for malware.
+
+
+
+
+
 
 
