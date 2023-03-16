@@ -338,9 +338,9 @@ With these steps, you have configured ModSecurity to use ClamAV to scan files fo
 
 Here are the general steps you can follow:
 
--> Install Fail2ban on your system. The installation process will vary depending on your operating system. You can refer to the official Fail2ban documentation for installation instructions on your specific OS.
+- Install Fail2ban on your system. The installation process will vary depending on your operating system.
 
--> Configure Fail2ban to read the ModSecurity audit log. You can do this by creating a new Fail2ban jail configuration file that specifies the location of the audit log file. Here is an example configuration file for 
+- Configure Fail2ban to read the ModSecurity audit log. You can do this by creating a new Fail2ban jail configuration file that specifies the location of the audit log file. Here is an example configuration file for 
 - Apache:
 ```bash
 [modsec]
@@ -357,9 +357,9 @@ filter   = modsec
 logpath  = /var/log/nginx/modsec_audit.log
 maxretry = 1
 ```
-These configurations enable the modsec jail and specify the location of the ModSecurity audit log file. You can customize the logpath based on where your ModSecurity audit log file is stored.
+These configurations enable the modsec jail and specify the location of the ModSecurity audit log file.
 
-Create a Fail2ban filter to parse the ModSecurity audit log. You can create a new filter file in the Fail2ban filter.d directory that contains regular expressions to match the relevant log entries. Here is an example filter file:
+- Create a Fail2ban filter to parse the ModSecurity audit log. You can create a new filter file in the Fail2ban filter.d directory that contains regular expressions to match the relevant log entries. Here is an example filter file:
 ```bash
 
 [Definition]
@@ -372,7 +372,7 @@ failregex = .*ModSecurity:.*\[id "(?P<id>\d+)".*\] .*\
 ```
 This filter matches ModSecurity log entries that indicate a request was denied due to a ModSecurity rule. You can customize this filter based on your specific needs.
 
-Configure Fail2ban to use the new filter. You can do this by adding the new filter to the jail.local file. Here is an example configuration for Apache:
+- Configure Fail2ban to use the new filter. You can do this by adding the new filter to the jail.local file. Here is an example configuration for Apache:
 ```bash
 [modsec]
 enabled  = true
@@ -390,7 +390,7 @@ maxretry = 1
 ```
 These configurations enable the modsec jail and specify the location of the ModSecurity audit log file. You can customize the logpath based on where your ModSecurity audit log file is stored.
 
-    Restart Fail2ban to apply the new configuration:
+- Restart Fail2ban to apply the new configuration:
 ```bash
 sudo systemctl restart fail2ban
 ```
@@ -401,9 +401,9 @@ Chkrootkit is a tool for checking if a system has been compromised by rootkits. 
 
 Here are the general steps you can follow to use Chkrootkit with ModSecurity on both Apache and Nginx:
 
--> Install Chkrootkit on your system. The installation process will vary depending on your operating system. You can refer to the official Chkrootkit documentation for installation instructions on your specific OS.
+- Install Chkrootkit on your system. The installation process will vary depending on your operating system.
 
--> Create a new ModSecurity rule to check for Chkrootkit warnings. You can create a new rule that checks for the presence of specific strings in the output of the Chkrootkit command. Here is an example rule:
+- Create a new ModSecurity rule to check for Chkrootkit warnings. You can create a new rule that checks for the presence of specific strings in the output of the Chkrootkit command. Here is an example rule:
 ```bash
 SecRule ARGS "@rx /usr/bin/chkrootkit" \
   "id:12346,\
@@ -421,12 +421,12 @@ SecRule RESPONSE_BODY "@rx Warning: Possible \(hacker|trojan|worm\) rootkit acti
 ```
 This rule checks for the presence of the Chkrootkit command in the request arguments, and then checks for the presence of specific warning strings in the response body. If a warning is detected, the rule blocks the request and generates a critical severity message.
 
--> Configure ModSecurity to use the new rule. You can add the new rule to the ModSecurity configuration file, and then reload the configuration to apply the changes.
+- Configure ModSecurity to use the new rule. You can add the new rule to the ModSecurity configuration file, and then reload the configuration to apply the changes.
 
--> Run Chkrootkit regularly to scan for rootkits on your system. You can set up a cron job to run Chkrootkit on a regular basis and send the output to a log file.
--> Configure ModSecurity to read the Chkrootkit log file. You can create a new Fail2ban filter that parses the Chkrootkit log file and triggers a ban if specific warning strings are detected.
+- Run Chkrootkit regularly to scan for rootkits on your system. You can set up a cron job to run Chkrootkit on a regular basis and send the output to a log file.
+- Configure ModSecurity to read the Chkrootkit log file. You can create a new Fail2ban filter that parses the Chkrootkit log file and triggers a ban if specific warning strings are detected.
 
--> Restart your web server to apply the ModSecurity configuration changes.
+- Restart your web server to apply the ModSecurity configuration changes.
 
 With these steps, you have configured ModSecurity to work with Chkrootkit on both Apache and Nginx. When a warning is detected by Chkrootkit, ModSecurity will block the request and log a critical severity message. Additionally, you can configure ModSecurity to work with a Fail2ban filter that reads the Chkrootkit log file and triggers a ban if specific warning strings are detected.
 
@@ -435,9 +435,9 @@ RKHunter (Rootkit Hunter) is a tool for checking if a system has been compromise
 
 Here are the general steps you can follow to use RKHunter with ModSecurity on both Apache and Nginx:
 
--> Install RKHunter on your system. The installation process will vary depending on your operating system. You can refer to the official RKHunter documentation for installation instructions on your specific OS.
+- Install RKHunter on your system. The installation process will vary depending on your operating system.
 
--> Create a new ModSecurity rule to check for RKHunter warnings. You can create a new rule that checks for the presence of specific strings in the output of the RKHunter command. Here is an example rule:
+- Create a new ModSecurity rule to check for RKHunter warnings. You can create a new rule that checks for the presence of specific strings in the output of the RKHunter command. Here is an example rule:
 ```bash
 SecRule ARGS "@rx /usr/bin/rkhunter" \
   "id:12348,\
@@ -455,13 +455,13 @@ SecRule RESPONSE_BODY "@rx Warning: (System\(s\) may have been compromised|Warni
 ```
 This rule checks for the presence of the RKHunter command in the request arguments, and then checks for the presence of specific warning strings in the response body. If a warning is detected, the rule blocks the request and generates a critical severity message.
 
--> Configure ModSecurity to use the new rule. You can add the new rule to the ModSecurity configuration file, and then reload the configuration to apply the changes.
+- Configure ModSecurity to use the new rule. You can add the new rule to the ModSecurity configuration file, and then reload the configuration to apply the changes.
 
--> Run RKHunter regularly to scan for rootkits on your system. You can set up a cron job to run RKHunter on a regular basis and send the output to a log file.
+- Run RKHunter regularly to scan for rootkits on your system. You can set up a cron job to run RKHunter on a regular basis and send the output to a log file.
 
--> Configure ModSecurity to read the RKHunter log file. You can create a new Fail2ban filter that parses the RKHunter log file and triggers a ban if specific warning strings are detected.
+- Configure ModSecurity to read the RKHunter log file. You can create a new Fail2ban filter that parses the RKHunter log file and triggers a ban if specific warning strings are detected.
 
--> Restart your web server to apply the ModSecurity configuration changes.
+- Restart your web server to apply the ModSecurity configuration changes.
 
 With these steps, you have configured ModSecurity to work with RKHunter on both Apache and Nginx. When a warning is detected by RKHunter, ModSecurity will block the request and log a critical severity message. Additionally, you can configure ModSecurity to work with a Fail2ban filter that reads the RKHunter log file and triggers a ban if specific warning strings are detected.
 
