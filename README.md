@@ -317,7 +317,7 @@ SecRule REQUEST_BODY \
 ```
 This rule scans the request body with ClamAV and blocks the request if a virus is found. You can customize this rule based on your specific needs.
 
-    Configure Nginx to use ModSecurity. Here is an example configuration that you can use:
+Configure Nginx to use ModSecurity. Here is an example configuration that you can use:
 
 ```bash
 http {
@@ -329,7 +329,7 @@ http {
 ```
 This configuration enables ModSecurity and specifies the location of the ModSecurity configuration file. You can customize the file path based on where you saved the configuration file.
 
-    Save the configuration file and restart Nginx:
+Save the configuration file and restart Nginx:
 ```bash
 sudo systemctl restart nginx
 ```
