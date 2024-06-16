@@ -1,13 +1,48 @@
 # ModSecurity Webserver Protection Guide 
-Welcome to the ModSecurity-Webserver-Protection repository! This repository provides a step-by-step guide on how to use ModSecurity with Apache2 or Nginx web servers to enhance server security. ModSecurity is a popular open-source Web Application Firewall (WAF) that provides protection against various attacks on web applications.
+Welcome to the ModSecurity Webserver Protection repository! This guide provides step-by-step instructions on using ModSecurity with Apache2 or Nginx web servers to enhance security. ModSecurity is a popular open-source Web Application Firewall (WAF) that protects against various web application attacks.
 
-In this guide, I will explore how to use ModSecurity to protect your web server against SQL injection attacks, cross-site scripting (XSS) attacks, and other common web application attacks. I will also cover how to integrate additional security tools like ClamAV, Chkrootkit, Rkhunter, and Fail2ban to further enhance the security of your web server.
+This guide covers using ModSecurity to defend against SQL injection, cross-site scripting (XSS), and other common attacks. It also includes instructions for integrating additional security tools like ClamAV, Chkrootkit, Rkhunter, and Fail2ban to further secure your web server.
 
-This guide is intended for users who have a basic understanding of Linux server administration and are familiar with Apache2 or Nginx web servers. The guide will provide detailed instructions on how to install and configure ModSecurity and other security tools on your web server, as well as how to integrate them with your web server configuration.
+Aimed at users with basic Linux server administration skills and familiarity with Apache2 or Nginx, this guide provides detailed installation and configuration steps for ModSecurity and other security tools, along with their integration into your server setup.
 
-I have created this guide in English and German to make it accessible to a wide audience. The guide is organized into sections that cover the installation and configuration of each security tool and their integration with ModSecurity. We will provide detailed explanations, examples, and screenshots to help you follow along with each step.
+This guide is available in both English and German and is organized into sections covering the installation, configuration, and integration of each security tool, with explanations, examples, and screenshots.
 
-I hope that this guide will help you enhance the security of your web server and protect your valuable data. If you have any questions or feedback, please feel free to contact us.
+I hope this guide helps you enhance your web server's security. If you have any questions or feedback, please contact me.
+
+## Table of content
+- [Install mod security for Apache2](#install-mod-security-for-apache2)
+  - [For each distribution, you need to install some prerequisite packages:](#for-each-distribution-you-need-to-install-some-prerequisite-packages)
+    - [Ubuntu/Debian](#ubuntudebian)
+    - [Fedora](#fedora)
+    - [BSD](#bsd)
+    - [Arch Linux](#arch-linux)
+  - [Download and build ModSecurity from source](#download-and-build-modsecurity-from-source)
+  - [Download and build the ModSecurity Apache Connector](#download-and-build-the-modsecurity-apache-connector)
+  - [Configure Apache to use ModSecurity](#configure-apache-to-use-modsecurity)
+  - [Enable ModSecurity in Apache](#enable-modsecurity-in-apache)
+  - [Configure and download the Core Rule Set (CRS)](#configure-and-download-the-core-rule-set-crs)
+  - [Test the Apache configuration](#test-the-apache-configuration)
+- [Install mod security for NGINX](#install-mod-security-for-nginx)
+  - [Install prerequisite packages](#install-prerequisite-packages)
+    - [Ubuntu/Debian](#ubuntudebian-1)
+    - [Fedora](#fedora-1)
+    - [BSD](#bsd-1)
+    - [Arch Linux](#arch-linux-1)
+  - [Download and build ModSecurity from source](#download-and-build-modsecurity-from-source-1)
+  - [Download and build the ModSecurity Nginx Connector](#download-and-build-the-modsecurity-nginx-connector)
+  - [Download and compile Nginx with ModSecurity module](#download-and-compile-nginx-with-modsecurity-module)
+  - [Compile Nginx with the ModSecurity module](#compile-nginx-with-the-modsecurity-module)
+  - [Configure Nginx to use ModSecurity](#configure-nginx-to-use-modsecurity)
+  - [Configure and download the Core Rule Set (CRS)](#configure-and-download-the-core-rule-set-crs-1)
+  - [Test the Nginx configuration](#test-the-nginx-configuration)
+- [Configuration for using ClamAV with Apache2](#configuration-for-using-clamav-with-apache2)
+- [Configuration for using ClamAV with Nginx](#configuration-for-using-clamav-with-nginx)
+- [Use Fail2ban to work with ModSecurity on both Apache and Nginx](#use-fail2ban-to-work-with-modsecurity-on-both-apache-and-nginx)
+- [Chkrootkit with Mod_Security](#chkrootkit-with-mod_security)
+- [RkHunter with Mod_Security](#rkhunter-with-mod_security)
+- [Be carefuly](#be-carefuly)
+  
+
 
 # Install mod security for Apache2
 To install ModSecurity on different Linux distributions while using Apache as your web server, follow the steps below.
