@@ -23,6 +23,7 @@ Install prerequisite packages:
 sudo apt-get update
 sudo apt-get install -y build-essential libtool autoconf automake pkg-config libxml2-dev libcurl4-openssl-dev libpcre3-dev libyajl-dev zlib1g-dev liblmdb-dev
 ```
+
 - Fedora:
 
 ```bash
