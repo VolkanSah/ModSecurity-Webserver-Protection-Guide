@@ -11,7 +11,6 @@ I hope this guide helps you enhance your web server's security. If you have any 
 
 ## Table of content
 - [Install mod security for Apache2](#install-mod-security-for-apache2)
-  - [For each distribution, you need to install some prerequisite packages:](#for-each-distribution-you-need-to-install-some-prerequisite-packages)
   - [Download and build ModSecurity from source](#download-and-build-modsecurity-from-source)
   - [Download and build the ModSecurity Apache Connector](#download-and-build-the-modsecurity-apache-connector)
   - [Configure Apache to use ModSecurity](#configure-apache-to-use-modsecurity)
