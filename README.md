@@ -11,6 +11,7 @@ I hope this guide helps you enhance your web server's security. If you have any 
 
 ## Table of content
 - [Install mod security for Apache2](#install-mod-security-for-apache2)
+  - [For each distribution, you need to install some prerequisite packages:](#for-each-distribution-you-need-to-install-some-prerequisite-packages)
   - [Download and build ModSecurity from source](#download-and-build-modsecurity-from-source)
   - [Download and build the ModSecurity Apache Connector](#download-and-build-the-modsecurity-apache-connector)
   - [Configure Apache to use ModSecurity](#configure-apache-to-use-modsecurity)
@@ -19,10 +20,6 @@ I hope this guide helps you enhance your web server's security. If you have any 
   - [Test the Apache configuration](#test-the-apache-configuration)
 - [Install mod security for NGINX](#install-mod-security-for-nginx)
   - [Install prerequisite packages](#install-prerequisite-packages)
-    - [Ubuntu/Debian](#ubuntudebian-1)
-    - [Fedora](#fedora-1)
-    - [BSD](#bsd-1)
-    - [Arch Linux](#arch-linux-1)
   - [Download and build ModSecurity from source](#download-and-build-modsecurity-from-source-1)
   - [Download and build the ModSecurity Nginx Connector](#download-and-build-the-modsecurity-nginx-connector)
   - [Download and compile Nginx with ModSecurity module](#download-and-compile-nginx-with-modsecurity-module)
@@ -36,6 +33,7 @@ I hope this guide helps you enhance your web server's security. If you have any 
 - [Chkrootkit with Mod_Security](#chkrootkit-with-mod_security)
 - [RkHunter with Mod_Security](#rkhunter-with-mod_security)
 - [Be carefuly](#be-carefuly)
+
   
 
 
@@ -46,32 +44,32 @@ To install ModSecurity on different Linux distributions while using Apache as yo
 Note: The instructions provided here assume that you have already installed the Apache web server on your system.
 Install prerequisite packages:
 
-### 1. For each distribution, you need to install some prerequisite packages:
+### 1. For each distribution, you need to install some prerequisite packages
 
-- Ubuntu/Debian:
+### Ubuntu/Debian:
 ```bash
 sudo apt-get update
 sudo apt-get install -y build-essential libtool autoconf automake pkg-config libxml2-dev libcurl4-openssl-dev libpcre3-dev libyajl-dev zlib1g-dev liblmdb-dev
 ```
 
-- Fedora:
+### Fedora:
 
 ```bash
 sudo dnf update
 sudo dnf install -y @development-tools libtool autoconf automake pkgconfig libxml2-devel libcurl-devel pcre-devel yajl-devel zlib-devel lmdb-devel
 ```
-- BSD:
+### BSD:
 ```bash
 sudo pkg update
 sudo pkg install -y autoconf automake libtool pkgconf libxml2 libcurl pcre yajl zlib lmdb
 ```
-- Arch Linux:
+### Arch Linux:
 ```bash
 sudo pacman -Syu
 sudo pacman -S --needed base-devel libxml2 libcurl pcre yajl zlib lmdb
 ```
 
-- Download and build ModSecurity from source:
+### Download and build ModSecurity from source:
 ```bash
 git clone --depth 1 -b v3/master --single-branch https://github.com/SpiderLabs/ModSecurity
 cd ModSecurity
@@ -82,7 +80,7 @@ git submodule update
 make
 sudo make install
 ```
-- Download and build the ModSecurity Apache Connector:
+### Download and build the ModSecurity Apache Connector:
 ```bash
 cd ..
 git clone --depth 1 https://github.com/SpiderLabs/ModSecurity-apache.git
@@ -113,12 +111,12 @@ Create a directory for additional ModSecurity rules:
 sudo mkdir /etc/apache2/modsecurity.d
 ```
 ## Enable ModSecurity in Apache:
-Ubuntu/Debian:
+### Ubuntu/Debian:
 ```bash
 sudo a2enmod modsecurity
 sudo service apache2 restart
-
-Fedora:
+```
+### Fedora:
 ```bash
 sudo ln -s /etc/apache2/mods-available/modsecurity.conf /etc/httpd/conf.modules.d/10-modsecurity.conf
 sudo systemctl restart httpd
@@ -128,20 +126,20 @@ BSD:
 echo 'LoadModule security2_module /usr/local/libexec/apache24/mod_security2.so' | sudo tee -a /usr/local/etc/apache24/httpd.conf
 sudo service apache24 restart
 ```
-Arch Linux:
+### Arch Linux:
 ```bash
 echo 'LoadModule security2_module /usr/lib/httpd/modules/mod_security2.so' | sudo tee -a /etc/httpd/conf/httpd.conf
 sudo systemctl restart httpd
 ```
 
-Configure and download the Core Rule Set (CRS):
+## Configure and download the Core Rule Set (CRS):
 
-    Install the Core Rule Set:
+Install the Core Rule Set:
 ```bash
 cd /etc/apache2
 sudo git clone https://github.com/coreruleset/coreruleset.git modsecurity-crs
 ```
-Create a symbolic link to the CRS configuration file:
+## Create a symbolic link to the CRS configuration file:
 ```bash
 
     sudo ln -s /etc/apache2/modsecurity-crs/crs-setup.conf /etc/apache2/modsecurity.d/crs-setup.conf
@@ -162,27 +160,27 @@ Now, ModSecurity should be installed and enabled on your Apache web server. To a
 # Install mod security for NGINX
 Install prerequisite packages:
 
-- Ubuntu/Debian:
+### Ubuntu/Debian:
 ```bash
 sudo apt-get update
 sudo apt-get install -y build-essential libtool autoconf automake pkg-config libxml2-dev libcurl4-openssl-dev libpcre3-dev libyajl-dev zlib1g-dev liblmdb-dev git
 ```
-- Fedora:
+### Fedora:
 ```bash
 sudo dnf update
 sudo dnf install -y @development-tools libtool autoconf automake pkgconfig libxml2-devel libcurl-devel pcre-devel yajl-devel zlib-devel lmdb-devel git
 ```
-- BSD:
+### BSD:
 ```bash
 sudo pkg update
 sudo pkg install -y autoconf automake libtool pkgconf libxml2 libcurl pcre yajl zlib lmdb git
 ```
-- Arch Linux:
+### Arch Linux:
 ```bash
 sudo pacman -Syu
 sudo pacman -S --needed base-devel libxml2 libcurl pcre yajl zlib lmdb git
 ```
-- Download and build ModSecurity from source:
+### Download and build ModSecurity from source:
 ```bash
 git clone --depth 1 -b v3/master --single-branch https://github.com/SpiderLabs/ModSecurity
 cd ModSecurity
@@ -193,14 +191,14 @@ git submodule update
 make
 sudo make install
 ```
-- Download and build the ModSecurity Nginx Connector:
+### Download and build the ModSecurity Nginx Connector:
 ```bash
 cd ..
 git clone --depth 1 https://github.com/SpiderLabs/ModSecurity-nginx.git
 ```
 - Download and compile Nginx with ModSecurity module:
 
-- Download the Nginx source code (replace 1.21.4 with the desired version number):
+### Download the Nginx source code (replace 1.21.4 with the desired version number):
 ```bash
 wget https://nginx.org/download/nginx-1.21.4.tar.gz
 tar -xvzf nginx-1.21.4.tar.gz
@@ -242,14 +240,14 @@ Install the Core Rule Set:
 cd /etc/nginx
 sudo git clone https://github.com/coreruleset/coreruleset.git modsecurity-crs
 ```
-Create a new Nginx configuration file (e.g., /etc/nginx/modsecurity_rules.conf) and include the CRS rules:
+### Create a new Nginx configuration file (e.g., /etc/nginx/modsecurity_rules.conf) and include the CRS rules:
 ```bash
     include /etc/nginx/modsecurity-crs/crs-setup.conf;
     include /etc/nginx/modsecurity-crs/rules/*.conf;
 ```
-Test the Nginx configuration:
+### Test the Nginx configuration:
 
-    Run the following command to test if the configuration is correct:
+Run the following command to test if the configuration is correct:
 ```bash
 sudo nginx -t
 ```
@@ -403,7 +401,7 @@ failregex = .*ModSecurity:.*\[id "(?P<id>\d+)".*\] .*\
 ```
 This filter matches ModSecurity log entries that indicate a request was denied due to a ModSecurity rule. You can customize this filter based on your specific needs.
 
-- Configure Fail2ban to use the new filter. You can do this by adding the new filter to the jail.local file. Here is an example configuration for Apache:
+### Configure Fail2ban to use the new filter. You can do this by adding the new filter to the jail.local file. Here is an example configuration for Apache:
 ```bash
 [modsec]
 enabled  = true
@@ -421,13 +419,13 @@ maxretry = 1
 ```
 These configurations enable the modsec jail and specify the location of the ModSecurity audit log file. You can customize the logpath based on where your ModSecurity audit log file is stored.
 
-- Restart Fail2ban to apply the new configuration:
+### Restart Fail2ban to apply the new configuration:
 ```bash
 sudo systemctl restart fail2ban
 ```
 With these steps, you have configured Fail2ban to work with ModSecurity on both Apache and Nginx. When a request is blocked by ModSecurity, Fail2ban will read the audit log and ban the IP address that made the request.
 
-# Chkrootkit with Mod_Security
+### Chkrootkit with Mod_Security
 Chkrootkit is a tool for checking if a system has been compromised by rootkits. While it is not directly related to ModSecurity, you can use it alongside ModSecurity to enhance the security of your web server.
 
 Here are the general steps you can follow to use Chkrootkit with ModSecurity on both Apache and Nginx:
@@ -461,7 +459,7 @@ This rule checks for the presence of the Chkrootkit command in the request argum
 
 With these steps, you have configured ModSecurity to work with Chkrootkit on both Apache and Nginx. When a warning is detected by Chkrootkit, ModSecurity will block the request and log a critical severity message. Additionally, you can configure ModSecurity to work with a Fail2ban filter that reads the Chkrootkit log file and triggers a ban if specific warning strings are detected.
 
-# RkHunter with Mod_Security
+## RkHunter with Mod_Security
 RKHunter (Rootkit Hunter) is a tool for checking if a system has been compromised by rootkits. Similar to Chkrootkit, you can use RKHunter alongside ModSecurity to enhance the security of your web server.
 
 Here are the general steps you can follow to use RKHunter with ModSecurity on both Apache and Nginx:
