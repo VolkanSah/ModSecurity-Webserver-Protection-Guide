@@ -94,9 +94,10 @@ Create a new configuration file for ModSecurity:
 ```bash
 sudo nano /etc/apache2/mods-available/modsecurity.conf
 ```
-```bash
+
 Add the following content to the file:
 LoadModule security2_module /usr/lib/apache2/modules/mod_security2.so
+```bash
 <IfModule mod_security2.c>
   SecRuleEngine On
   SecRequestBodyAccess On
