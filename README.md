@@ -3,7 +3,7 @@ Welcome to the ModSecurity Webserver Protection repository! This guide provides 
 
 This guide covers using ModSecurity to defend against SQL injection, cross-site scripting (XSS), and other common attacks. It also includes instructions for integrating additional security tools like ClamAV, Chkrootkit, Rkhunter, and Fail2ban to further secure your web server.
 
-Aimed at users with basic Linux server administration skills and familiarity with Apache2 or Nginx, this guide provides detailed installation and configuration steps for ModSecurity and other security tools, along with their integration into your server setup.
+Aimed at users with basic server administration skills and familiarity with Apache2 or Nginx, this guide provides detailed installation and configuration steps for ModSecurity and other security tools, along with their integration into your server setup.
 
 
 I hope this guide helps you enhance your web server's security. If you have any questions or feedback, please contact me. Don't forget to leave a :star:
