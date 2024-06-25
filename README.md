@@ -5,7 +5,6 @@ This guide covers using ModSecurity to defend against SQL injection, cross-site 
 
 Aimed at users with basic Linux server administration skills and familiarity with Apache2 or Nginx, this guide provides detailed installation and configuration steps for ModSecurity and other security tools, along with their integration into your server setup.
 
-This guide is available in both English and German and is organized into sections covering the installation, configuration, and integration of each security tool, with explanations, examples, and screenshots.
 
 I hope this guide helps you enhance your web server's security. If you have any questions or feedback, please contact me.
 
