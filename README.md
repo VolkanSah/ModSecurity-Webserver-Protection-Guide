@@ -505,7 +505,7 @@ There are many community-driven projects and resources available online that pro
 
 When using any ModSecurity rule file, it is important to understand the rules and customize them to fit your specific use case. 
 
-## Support
+## Your Support
 If you find this project useful and want to support it, there are several ways to do so:
 
 - If you find the white paper helpful, please ⭐ it on GitHub. This helps make the project more visible and reach more people.
