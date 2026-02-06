@@ -1,0 +1,88 @@
+## Ethical Security Operations License (ESOL v1.1)
+
+### Section 1: Preamble and Scope
+The **Ethical Security Operations License (ESOL v1.1)** is an **additional, non-severable condition** supplementing the **MIT License** under which the covered software (hereinafter "the Work") is distributed.
+
+By downloading, copying, modifying, or executing the Work, the Licensee **irrevocably agrees** to adhere to both the terms of the MIT License and the specific, mandatory ethical constraints defined herein. **Lack of awareness of these terms does not constitute a defense.**
+
+### Section 2: Mandatory Ethical Use and Purpose
+The grant of rights under this License is **expressly and exclusively conditioned** upon the Licensee's continuous adherence to the following use limitations:
+
+1. **Authorized Use Only:** The Work shall be used **exclusively** for:
+   - Defensive security operations (Blue Teaming)
+   - Authorized penetration testing (Red Teaming) with documented consent
+   - Vulnerability research on systems owned or explicitly authorized by the researcher
+   - Security compliance auditing with contractual authorization
+
+2. **Explicit Written Authorization Required:** Any security testing, scanning, exploitation, or enumeration against **any system not wholly owned by the Licensee** requires **explicit, documented, written authorization** from the rightful owner **prior to execution**. Verbal permission, implicit consent, or "bug bounty program existence" does **not** constitute authorization without explicit scope documentation.
+
+3. **Educational Use Constraints:** Educational or research use must:
+   - Occur only in isolated, controlled environments (virtual machines, dedicated test networks)
+   - Not target production systems, public infrastructure, or third-party services
+   - Comply with institutional ethics board requirements where applicable
+
+### Section 3: Prohibited Use (Malicious Activities)
+The Licensee is **strictly and unconditionally prohibited** from using the Work for:
+
+* **Unauthorized Access or Reconnaissance:** Scanning, probing, accessing, or attempting to access any computer system, network, database, or data without **explicit prior written authorization** from the lawful owner.
+
+* **Malicious Code Operations:** Creating, distributing, executing, or facilitating:
+  - Malware, viruses, worms, trojans, ransomware, or rootkits
+  - Cryptominers operating without system owner consent
+  - Phishing infrastructure, scam campaigns, or social engineering attacks
+  - Exploits targeting zero-day vulnerabilities outside authorized disclosure processes
+
+* **Service Disruption:** Denial-of-service (DoS/DDoS) attacks, resource exhaustion, or any unauthorized degradation of system availability or performance.
+
+* **Data Exfiltration or Manipulation:** Unauthorized copying, modification, deletion, or encryption of data not owned by the Licensee.
+
+* **Legal Violations:** Any activity violating the Computer Fraud and Abuse Act (CFAA), GDPR, national cybercrime laws, or international treaties concerning unauthorized computer access.
+
+* **Circumvention of Security Controls:** Bypassing authentication, encryption, access controls, or security monitoring systems without documented authorization.
+
+### Section 4: Compliance Verification and Audit Rights
+The Licensor reserves the right to:
+- Request documentation of authorization for any deployment of the Work
+- Audit compliance upon reasonable notice if misuse is suspected
+- Publicly disclose violations (including Licensee identity) to warn the security community
+
+**Licensees conducting authorized security research are encouraged to maintain contemporaneous records of authorization as evidence of compliance.**
+
+### Section 5: No Warranty Regarding Legal Compliance
+**THE WORK IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND. THE LICENSOR MAKES NO REPRESENTATION THAT USE OF THE WORK, EVEN IN COMPLIANCE WITH THIS LICENSE, WILL BE LEGAL IN ALL JURISDICTIONS. THE LICENSEE BEARS SOLE RESPONSIBILITY FOR ENSURING COMPLIANCE WITH ALL APPLICABLE LAWS.**
+
+### Section 6: Violation and Termination
+Violation of **any** provision of this ESOL v1.1 constitutes a **material breach** resulting in:
+
+1. **Immediate Automatic Termination** of all rights under both the MIT License and this ESOL
+2. **Obligation to Cease Use** and destroy all copies of the Work
+3. **Liability for Damages:** The Licensee shall be liable for all damages, including but not limited to:
+   - Direct and consequential damages to affected third parties
+   - Licensor's legal costs in enforcement actions
+   - Reputational harm to the Licensor or the security research community
+
+4. **Reporting to Authorities:** The Licensor reserves the right to report violations to appropriate law enforcement and cybersecurity authorities.
+
+### Section 7: Severability and Precedence
+If any provision of this License is held unenforceable, the remaining provisions remain in full effect. **In any conflict between the MIT License and ESOL v1.1, the ESOL v1.1 takes precedence regarding ethical use constraints.**
+
+### Section 8: Jurisdiction and Dispute Resolution
+This License shall be governed by the laws of **[Germany(Berlin)]**. Disputes shall be resolved through binding arbitration under **[Arbitration Rules]**, with the prevailing party entitled to attorney's fees.
+
+### Section 9: License Acceptance Evidence
+By downloading this software from any source (GitHub, mirrors, forks), you acknowledge that:
+- This license was prominently displayed in the repository
+- You had reasonable opportunity to review these terms
+- Your use constitutes legally binding acceptance
+---
+
+## Final Licensing Statement
+**This Work is dual-licensed under:**
+1. **The MIT License** (for general software rights)
+2. **The Ethical Security Operations License v1.1 (ESOL v1.1)** (for use constraints)
+
+**The ESOL v1.1 is a mandatory, non-severable condition of use. Acceptance is automatic upon use of the Work.**
+
+**By using this software, you acknowledge that misuse may result in criminal prosecution, civil liability, and permanent termination of license rights.**
+
+> Checked & Updated, on 06.02.2026 @04-31MEZ , Thanks Rita
