@@ -1,6 +1,52 @@
 # Security Stack Setup Notes
 > Ubuntu 24.04 LTS | Apache | ISPConfig | Cloudflare | Let's Encrypt
 
+## ⚠️ Security Warning — Read Before You Run
+
+**Never run scripts from the internet as root without reading them first.**  
+This applies to this script too. Always inspect before executing:
+
+```bash
+# Download first, read it, THEN run
+wget https://raw.githubusercontent.com/.../setup_security.sh
+cat setup_security.sh        # read it!
+nano setup_security.sh       # adjust if needed
+```
+
+Do not pipe directly into bash:
+```bash
+# DON'T do this — you can't review what you're running
+curl https://example.com/script.sh | bash   # ❌
+```
+
+---
+
+## How to Run
+
+The script must be run as **root** (not just sudo) — package installs, service configs and file permissions require it.
+
+```bash
+# Switch to root first
+sudo -i
+
+# Download the script
+wget https://raw.githubusercontent.com/VolkanSah/ModSecurity-Webserver-Protection-Guide/main/setup_security.sh
+
+# Make it executable
+chmod +x setup_security.sh
+
+# Read it before running!
+cat setup_security.sh
+
+# Run it
+bash setup_security.sh
+```
+
+> Running as root means a mistake affects the whole system.  
+> Read the script. Know what it does. Then run it.
+
+---
+
 ## Stack Overview
 - **ModSecurity** (WAF) — blocks malicious requests at application level
 - **OWASP Core Rule Set (CRS)** — production-ready ruleset for ModSecurity
