@@ -66,6 +66,13 @@ bash setup_security.sh
 7. Switch ModSecurity from DetectionOnly → On
 ```
 
+### Quick scheck
+
+```
+fail2ban-client status && systemctl is-active clamav-daemon apache2 && grep SecRuleEngine /etc/modsecurity/modsecurity.conf
+
+```
+
 ## ⚠️ Important Notes
 
 ### ModSecurity — Start in DetectionOnly mode
