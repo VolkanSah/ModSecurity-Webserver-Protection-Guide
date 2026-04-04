@@ -33,7 +33,7 @@ I hope this guide helps you enhance your web server's security. If you have any 
 - [Be carefuly](#be-carefuly)
 
   
-
+---
 
 # Install mod security for Apache2
 To install ModSecurity on different Linux distributions while using Apache as your web server, follow the steps below.
@@ -78,6 +78,9 @@ git submodule update
 make
 sudo make install
 ```
+
+---
+
 ### Download and build the ModSecurity Apache Connector:
 ```bash
 cd ..
@@ -109,6 +112,9 @@ Create a directory for additional ModSecurity rules:
 ```bash
 sudo mkdir /etc/apache2/modsecurity.d
 ```
+
+---
+
 ## Enable ModSecurity in Apache:
 ### Ubuntu/Debian:
 ```bash
@@ -155,6 +161,8 @@ If the output shows "Syntax OK," you can proceed to restart the Apache server:
 sudo systemctl restart apache2
 ```
 Now, ModSecurity should be installed and enabled on your Apache web server. To add custom rules or modify existing ones, you can edit the configuration files located in the /etc/apache2/modsecurity.d/ directory.
+
+---
 
 # Install mod security for NGINX
 Install prerequisite packages:
@@ -233,6 +241,10 @@ Additionally, add the following line inside the location block where you want to
 ```bash
 modsecurity_rules_file /etc/nginx/modsecurity_rules.conf;
 ```
+
+---
+
+
 ### Configure and download the Core Rule Set (CRS):
 Install the Core Rule Set:
 ```bash
@@ -255,6 +267,10 @@ If the output shows "configuration file test is successful," you can proceed to 
         sudo nginx -s reload
 ```
 Now, ModSecurity should be installed and enabled on your Nginx web server. To add custom rules or modify existing ones, you can edit the configuration files located in the /etc/nginx/modsecurity.d/ directory.
+
+
+---
+
 
 # Configuration for using ClamAV with Apache2:
 These rules scan submitted files for malware by using the "clamscan" command from ClamAV. If a virus is found, the file is blocked and a warning message is issued.
@@ -330,8 +346,13 @@ sudo systemctl restart apache2
 ```
 With these changes, ModSecurity will be configured to scan every uploaded file with ClamAV, regardless of its file type. This will ensure that all files are checked for malware before being stored on your server.
 
+
+---
+
+
 # Configuration for using ClamAV with Nginx:
-    Configure ModSecurity to use ClamAV. Here is an example configuration that you can use:
+> Configure ModSecurity to use ClamAV. Here is an example configuration that you can use:
+
 ```bash
 SecRule REQUEST_BODY \
   "@clamav_scan" \
@@ -344,7 +365,7 @@ SecRule REQUEST_BODY \
 ```
 This rule scans the request body with ClamAV and blocks the request if a virus is found. You can customize this rule based on your specific needs.
 
-Configure Nginx to use ModSecurity. Here is an example configuration that you can use:
+> Configure Nginx to use ModSecurity. Here is an example configuration that you can use:
 
 ```bash
 http {
@@ -361,6 +382,8 @@ Save the configuration file and restart Nginx:
 sudo systemctl restart nginx
 ```
 With these steps, you have configured ModSecurity to use ClamAV to scan files for malware in Nginx. You can now upload files to your server and ensure that they are automatically checked for malware.
+
+---
 
 # use Fail2ban to work with ModSecurity on both Apache and Nginx.
 
@@ -400,6 +423,10 @@ failregex = .*ModSecurity:.*\[id "(?P<id>\d+)".*\] .*\
 ```
 This filter matches ModSecurity log entries that indicate a request was denied due to a ModSecurity rule. You can customize this filter based on your specific needs.
 
+
+---
+
+
 ### Configure Fail2ban to use the new filter. You can do this by adding the new filter to the jail.local file. Here is an example configuration for Apache:
 ```bash
 [modsec]
@@ -423,6 +450,8 @@ These configurations enable the modsec jail and specify the location of the ModS
 sudo systemctl restart fail2ban
 ```
 With these steps, you have configured Fail2ban to work with ModSecurity on both Apache and Nginx. When a request is blocked by ModSecurity, Fail2ban will read the audit log and ban the IP address that made the request.
+
+---
 
 ### Chkrootkit with Mod_Security
 Chkrootkit is a tool for checking if a system has been compromised by rootkits. While it is not directly related to ModSecurity, you can use it alongside ModSecurity to enhance the security of your web server.
@@ -457,6 +486,9 @@ This rule checks for the presence of the Chkrootkit command in the request argum
 - Restart your web server to apply the ModSecurity configuration changes.
 
 With these steps, you have configured ModSecurity to work with Chkrootkit on both Apache and Nginx. When a warning is detected by Chkrootkit, ModSecurity will block the request and log a critical severity message. Additionally, you can configure ModSecurity to work with a Fail2ban filter that reads the Chkrootkit log file and triggers a ban if specific warning strings are detected.
+
+
+---
 
 ## RkHunter with Mod_Security
 RKHunter (Rootkit Hunter) is a tool for checking if a system has been compromised by rootkits. Similar to Chkrootkit, you can use RKHunter alongside ModSecurity to enhance the security of your web server.
@@ -493,44 +525,56 @@ This rule checks for the presence of the RKHunter command in the request argumen
 
 With these steps, you have configured ModSecurity to work with RKHunter on both Apache and Nginx. When a warning is detected by RKHunter, ModSecurity will block the request and log a critical severity message. Additionally, you can configure ModSecurity to work with a Fail2ban filter that reads the RKHunter log file and triggers a ban if specific warning strings are detected.
 
-## Be carefuly
+---
 
-There are many community-driven projects and resources available online that provide advanced and secure ModSecurity rule files that you can use as a starting point. Here are a few examples:
+## ⚠️ Be Careful
 
-- OWASP ModSecurity Core Rule Set (CRS): This is a set of rules that are designed to provide basic security protections for web applications. The CRS is continuously updated and maintained by the OWASP ModSecurity Core Rule Set Project, and is available on GitHub.
+Many community-driven projects provide well-maintained ModSecurity rule sets you can use as a solid starting point:
 
-- Comodo ModSecurity Rules: Comodo is a security company that provides a set of ModSecurity rules that are designed to provide advanced security protections for web applications. These rules are available for free on their website.
+- **[OWASP ModSecurity Core Rule Set (CRS)](https://github.com/coreruleset/coreruleset)** — The industry standard. Continuously maintained by the OWASP CRS Project, designed to provide broad baseline protection for web applications.
+- **[Comodo ModSecurity Rules](https://waf.comodo.com/)** — A free set of rules from Comodo focused on advanced web application protection.
+- **[Atomicorp ModSecurity Rules](https://atomicorp.com/atomic-modsecurity-rules/)** — Another free, well-regarded rule set from Atomicorp targeting advanced threat scenarios.
 
-- Atomicorp ModSecurity Rules: Atomicorp is a security company that provides a set of ModSecurity rules that are designed to provide advanced security protections for web applications. These rules are available for free on their website.
-
-When using any ModSecurity rule file, it is important to understand the rules and customize them to fit your specific use case. 
-
-## Your Support
-
-Found this useful?
-
-- ⭐ Star this repository
-- 🐛 Report issues
-- 💡 Suggest improvements
-- 💖 [Sponsor development](https://github.com/sponsors/volkansah)
+> Regardless of which rule set you use — always review and tune the rules to fit your specific environment. Blind trust in any rule set is itself a security risk.
 
 ---
 
-**Stay secure. Stay paranoid. 🔒**
+## 💬 Support This Project
 
+The AI ecosystem has made security more critical than ever — spam, scams, and automated attacks are everywhere and getting smarter.
 
-### Other Stuff
-##### Security Guides:
+If you find these tips useful:
+
+- ⭐ **Star this repository** to show your support
+- 💬 **Say hello in the [Discussions](../../discussions)** — feedback and war stories welcome
+- 🐛 **[Report issues](../../issues)** if something's broken or outdated
+- 💡 **Suggest improvements** or submit a PR
+- 💖 **[Sponsor my free time and tests](https://github.com/sponsors/volkansah)** — keeps this project alive
+
+> Simple tips. Hard results. Stay secure. Stay paranoid. 🔒
+
+---
+
+### 🔗 Related Projects
+
+#### Security Guides
 
 - [Security Headers — Complete Implementation Guide](https://github.com/VolkanSah/Security-Headers)
 - [Securing FastAPI Applications](https://github.com/VolkanSah/Securing-FastAPI-Applications)
-- [GPT Security Best Practices](https://github.com/VolkanSah/GPT-Security-Best-Practices)
-- [WPScan – WordPress Security Scanner Guide](https://github.com/VolkanSah/WordPress-Security-Scanner-advanced-use)
+- [AI API (Wrapper) — Security Best Practices](https://github.com/VolkanSah/AI-API-Security-Best-Practices)
+- [WPScan — WordPress Security Scanner Guide](https://github.com/VolkanSah/WordPress-Security-Scanner-advanced-use)
+- [Detection Labs for Palantir-Style Activity](https://github.com/VolkanSah/Detection-Labs-for-Palantir-Style-Activity)
+- [Block SQL Injection Attacks in PHP](https://github.com/VolkanSah/ModSecurity-rule-to-block-SQL-injection-attacks-in-PHP)
 
-Thank you for your support! ❤️
+#### Other
 
-> Copyright S. Volkan Kücükbudak
+- 🤖 **[Multi-LLM API Gateway](https://github.com/VolkanSah/Multi-LLM-API-Gateway)** — A self-hosted AI hub boilerplate, works locally and on Hugging Face free tiers.
+- 🚨 **[GitHub & Social Media Scam Exposure](https://github.com/Wall-of-Shames/scammer-analysis-guide)** — Identifying and dismantling phishing campaigns and social engineering attacks on GitHub.
+- 🔐 **[How to Secure Your Git Ass](https://github.com/VolkanSah/How-to-Secure-Your-Git-Ass)** — A practical guide to protecting your GitHub presence.
 
+---
+
+> © [S. Volkan Kücükbudak](https://github.com/volkansah)
 
 
 
