@@ -1,5 +1,5 @@
 # Security Stack Setup Notes
-> Ubuntu 24.04 LTS | Apache | ISPConfig | Cloudflare | Let's Encrypt
+> (Debain) Ubuntu 24.04.4 LTS | Apache | ISPConfig | Cloudflare | Let's Encrypt
 
 ## ⚠️ Security Warning — Read Before You Run
 
@@ -60,9 +60,9 @@ bash setup_security.sh
 1. Fresh Ubuntu 24.04 LTS
 2. Create admin user, disable root SSH
 3. Run setup_security.sh
-4. Install ISPConfig
+4. Install your panels e.g. ISPConfig 
 5. Configure Let's Encrypt
-6. Set up Cloudflare
+6. Set up CDN e.g. Cloudflare
 7. Switch ModSecurity from DetectionOnly → On
 ```
 
@@ -89,7 +89,7 @@ systemctl restart apache2
 ```
 
 ### Cloudflare — mod_remoteip is critical
-If you use Cloudflare, all traffic comes from Cloudflare IPs.  
+If you use Cloudflare or similar, all traffic comes from Cloudflare IPs.  
 Without `mod_remoteip`, Fail2Ban will **ban Cloudflare instead of the attacker**.
 
 ```bash
@@ -120,7 +120,7 @@ rkhunter --check
 chkrootkit
 ```
 
-## After ISPConfig Setup — Checklist
+## After your Panel (e.g. ISPConfig) Setup — Checklist
 
 - [ ] ModSecurity switched to `SecRuleEngine On`
 - [ ] `mod_remoteip` enabled, Cloudflare IPs whitelisted
